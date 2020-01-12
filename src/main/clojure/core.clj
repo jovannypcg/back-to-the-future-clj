@@ -8,6 +8,7 @@
        :stargazers-count))
 
 (defn sum-stars
+  "Synchronously sums the stars of the provided repositories."
   ([username] (sum-stars username (github/repo-names username)))
   ([username repos]
    (->> repos
@@ -15,6 +16,7 @@
         (reduce +))))
 
 (defn sum-stars-async
+  "Asynchronously sums the stars of the provided repositories."
   ([username] (sum-stars-async username (github/repo-names username)))
   ([username repos]
    (let [stars (for [repo repos]
