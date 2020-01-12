@@ -13,3 +13,12 @@
    (->> repos
         (map #(get-stars username %))
         (reduce +))))
+
+(defn sum-stars-async
+  ([username] (sum-stars-async username (github/repo-names username)))
+  ([username repos]
+   (let [stars (for [repo repos]
+                 (future (get-stars username repo)))]
+     (->> stars
+          (map deref)
+          (reduce +)))))
